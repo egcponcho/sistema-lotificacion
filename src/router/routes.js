@@ -5,15 +5,20 @@ const routes = [
     children: [
       {
         path: "",
-        name: "Home",
-        component: () => import("src/pages/HomePage.vue"),
+        name: "home",
+        component: () => import("pages/HomePage.vue"),
+      },
+      {
+        path: "/customers",
+        name: "customers",
+        component: () => import("pages/CustomersPage.vue"),
       },
     ],
   },
 
   {
     path: "/:catchAll(.*)*",
-    component: () => import("src/pages/404Page.vue"),
+    component: () => import("pages/404Page.vue"),
   },
 ];
 
