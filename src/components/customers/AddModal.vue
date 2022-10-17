@@ -143,17 +143,21 @@ export default defineComponent({
   setup() {
     const { addDocument } = useFirestoreStore();
 
-    const modal = ref(false);
+    const customer = reactive({});
 
-    const customer = reactive({
-      fullName: "",
-      dui: "",
-      phoneNumber: "",
-      address: "",
-    });
+    const initialFields = () => {
+      customer.fullName = "";
+      customer.phoneNumber = "";
+      customer.dui = "";
+      customer.address = "";
+    };
+
+    const modal = ref(false);
 
     const toggleModal = () => {
       modal.value = !modal.value;
+
+      initialFields();
     };
 
     const validateFields = () => {
@@ -169,25 +173,18 @@ export default defineComponent({
       }
     };
 
-    const resetFields = () => {
-      customer.fullName = "";
-      customer.phoneNumber = "";
-      customer.dui = "";
-      customer.address = "";
-    };
-
     const addCustomer = async () => {
       const result = await addDocument("customers", customer);
 
-      resetFields();
+      initialFields();
     };
 
     return {
       modal,
       customer,
       toggleModal,
+      initialFields,
       validateFields,
-      resetFields,
       addDocument,
       addCustomer,
     };
